@@ -2,12 +2,12 @@ pipeline {
 
     agent none 
 
-    parameter {
+    parameters {
         choice(name: 'CHOICE_PARAM', choices: ['dev', 'staging', 'prod'], description: 'Pick one from a fixed list')
 
     }
 
-    enviroment {
+    environment  {
 
         APP_NAME = "CHARAN"
 
