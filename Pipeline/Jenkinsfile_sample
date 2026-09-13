@@ -24,7 +24,7 @@ pipeline {
                 
                 echo "CHOICE_PARAM  = ${params.CHOICE_PARAM}"
                
-                echo "${env.APP}"
+                echo "${env.APP_NAME}"
 
             }
         }
