@@ -1,0 +1,48 @@
+pipeline {
+
+    agent none
+
+    parameters {
+        string(name: 'STRING_PARAM', defaultValue: 'hello', description: 'A simple text value')
+
+        text(name: 'TEXT_PARAM', defaultValue: 'multi\nline\ntext', description: 'A multi-line text value')
+
+        booleanParam(name: 'BOOLEAN_PARAM', defaultValue: true, description: 'A true/false checkbox')
+
+        choice(name: 'CHOICE_PARAM', choices: ['dev', 'staging', 'prod'], description: 'Pick one from a fixed list')
+
+        password(name: 'PASSWORD_PARAM', defaultValue: 'changeme', description: 'A masked secret value')
+    }
+
+    stages {
+        stage('stage 1'){
+
+            agent { label 'slave 1' }
+
+            steps{
+                echo "STRING_PARAM  = ${params.STRING_PARAM}"
+                echo "TEXT_PARAM    = ${params.TEXT_PARAM}"
+                echo "BOOLEAN_PARAM = ${params.BOOLEAN_PARAM}"
+                echo "CHOICE_PARAM  = ${params.CHOICE_PARAM}"
+            }
+
+        }
+        stage('stage 2'){
+
+            agent { label 'slave 2' }
+
+            steps{
+
+                echo "PASSWORD_PARAM is set but masked in logs"
+
+                sh '''
+                    sleep 5
+                    ls -lrt
+                    pwd
+                '''
+
+            }
+
+        }
+    }
+}
