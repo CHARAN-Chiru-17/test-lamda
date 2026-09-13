@@ -23,7 +23,8 @@ pipeline {
                 echo "inside stage 1"
                 
                 echo "CHOICE_PARAM  = ${params.CHOICE_PARAM}"
-                echo "$(env.APP_NAME)"
+               
+                echo "${env.APP}"
 
             }
         }
