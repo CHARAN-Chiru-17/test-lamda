@@ -1,0 +1,48 @@
+pipeline {
+
+    agent none 
+
+    parameter {
+        choice(name: 'CHOICE_PARAM', choices: ['dev', 'staging', 'prod'], description: 'Pick one from a fixed list')
+
+    }
+
+    enviroment {
+
+        APP_NAME = "CHARAN"
+
+    }
+
+    stages {
+
+        stage('stage 1'){
+
+            agent { label 'slave1'}
+
+            steps{
+                echo "inside stage 1"
+                echo "CHOICE_PARAM=$(params.CHOICE_PARAM)"
+                echo "$(env.APP_NAME)"
+
+            }
+        }
+
+        stage('stage 2'){
+            agent { label 'slave2'}
+
+            steps{
+
+                sh '''
+                sleep 5
+                ls -lrt
+
+
+                '''
+            }
+        }
+
+        
+    }
+
+    
+}
