@@ -1,0 +1,59 @@
+pipeline {
+
+    agent none
+
+    paramters {    
+        choice(name: 'CHOICE_PARA' , choices: ['dev','stage','prod'], description: 'select one dev')
+    }
+
+    environment {
+        APP_NAME = CHARAN
+    }
+
+    stages{
+        stage('checkout'){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/CHARAN-Chiru-17/test-lamda.git']])
+            }
+        }
+        stage('stage 1'){
+            steps{
+                sh '''
+                    sleep 10
+                    ls -lrt
+                    echo "this is a inside stage 1"
+
+                '''
+            }
+        }
+        stage('stage 2 - parallel'){
+            parallel{
+                stage('parallel-1'){
+                    steps{
+                        echo "this parallel-1"
+                    }
+                }
+                stage('parallel-2'){
+                    steps{
+                        echo "this is parallel-2"
+                    }
+                }
+            }
+        }
+
+        stage('stage 3'){
+            when {
+                environment name: 'APP_NAME', value: 'CHARAN'
+            }
+            steps{
+                echo 'exceuted only when enviorment is correct'
+                sh '''
+                    pwd
+                    ls
+
+                '''
+            }
+        }
+    }
+
+}
