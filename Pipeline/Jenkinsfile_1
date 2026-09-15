@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        APP_NAME = CHARAN
+        APP_NAME = 'CHARAN'
     }
 
     stages{
