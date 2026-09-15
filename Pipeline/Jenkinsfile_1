@@ -12,11 +12,13 @@ pipeline {
 
     stages{
         stage('checkout'){
+            agent {label 'slave1'}
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/CHARAN-Chiru-17/test-lamda.git']])
             }
         }
         stage('stage 1'){
+            agent {label 'slave1'}
             steps{
                 sh '''
                     sleep 10
@@ -29,11 +31,13 @@ pipeline {
         stage('stage 2 - parallel'){
             parallel{
                 stage('parallel-1'){
+                    agent {label 'slave2'}
                     steps{
                         echo "this parallel-1"
                     }
                 }
                 stage('parallel-2'){
+                    agent {label 'slave2'}
                     steps{
                         echo "this is parallel-2"
                     }
@@ -42,6 +46,7 @@ pipeline {
         }
 
         stage('stage 3'){
+            agent {label 'slave2'}
             when {
                 environment name: 'APP_NAME', value: 'CHARAN'
             }
