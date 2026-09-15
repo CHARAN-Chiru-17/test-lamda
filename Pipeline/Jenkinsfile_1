@@ -2,7 +2,7 @@ pipeline {
 
     agent none
 
-    paramters {    
+    parameters {    
         choice(name: 'CHOICE_PARA' , choices: ['dev','stage','prod'], description: 'select one dev')
     }
 
