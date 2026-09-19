@@ -51,7 +51,7 @@ pipeline {
                 environment name: 'APP_NAME', value: 'CHARAN'
             }
             steps{
-                echo 'exceuted only when enviorment is  he correct--------'
+                echo 'exceuted only when enviorment is  he correct-----  ---'
                 sh '''
                     pwd
                     ls
